@@ -28,23 +28,24 @@ const fetcher = function(URL, path) {
         }
       });
     } else {
-     fetchAndSave(URL, path)
-    };
+      fetchAndSave(URL, path);
+    }
   });
 };
 
 const fetchAndSave = (URL, path) => {
   request(URL, (error, response, body) => {
-    if (!error) {
-      console.log(response.statusCode + '\nURL Invalid.')
+    if (error) {
+      console.log(response.statusCode + '\nURL Invalid.');
       return; //this error is not finished, first 2 edge cases correct!
     }
     fs.writeFile(path, body, err => {
+      
       console.log(`Downloaded and saved ${body.length} bytes to ${path}`);
       rl.close();
     });
   });
-}
+};
 
 fetcher(argv[0], argv[1]);
 
@@ -59,13 +60,13 @@ fetcher(argv[0], argv[1]);
 //   fs.access(path, err => {
 //     if (!err) {
 //       rl.question('File exists. Overwrite? y/n', (response) => {
-//         response === 'y' ? 
+//         response === 'y' ?
 //       });
 //     }
 //   });
 //   request(URL, (error, response, body) => {
 
-//     // console.log('error:', error); 
+//     // console.log('error:', error);
 //     // console.log('statusCode:', response && response.statusCode);
 //     fs.writeFile(path, body, err => {
 //       // if (err) {
